@@ -13,6 +13,7 @@ public class Program
 
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
+        builder.Services.AddCors();
 
         builder.Services.AddDbContext<GarageDbContext>(opts =>
             opts.UseSqlServer(builder.Configuration.GetConnectionString(nameof(GarageDbContext))));
@@ -23,6 +24,8 @@ public class Program
         });
 
         var app = builder.Build();
+
+        app.UseCors(b => b.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
 
         if (app.Environment.IsDevelopment())
         {
